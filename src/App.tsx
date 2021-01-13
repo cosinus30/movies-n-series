@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Button from "@material-ui/core/Button";
+import { Navbar } from "./Components/Navbar/Navbar";
+import { BrowserRouter } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+import { Movies } from "./Containers/Movies";
+import { Series } from "./Containers/Series";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <div className="App">
+                <Navbar />
+            </div>
+            <Switch>
+                <Route exact path="/movies" component={Movies} />
+                <Route exact path="/series" component={Series} />
+            </Switch>
+        </BrowserRouter>
+    );
 }
 
 export default App;
