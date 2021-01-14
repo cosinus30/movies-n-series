@@ -1,0 +1,16 @@
+.Image{
+    object-fit: cover;
+    max-height: 320px;
+}
+
+.Info {
+    color: aliceblue;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.Card:hover {
+    transform: scale(1.08);
+}
