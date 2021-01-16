@@ -1,6 +1,6 @@
 import React from "react";
 import { Navbar } from "./Components/organisms/Navbar/Navbar";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Redirect } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
 import { Movies } from "./pages/Movies";
 import { Series } from "./pages/Series";
@@ -47,6 +47,7 @@ function App() {
                         <Route exact path="/about" component={About} />
                     </Switch>
                     <Route path={"/movies/:id"} component={MovieDetail} />
+                    <Route path="/" component={() => <Redirect to={"/movies"}/>}/>
                 </QueryClientProvider>
             </ThemeProvider>
         </BrowserRouter>
