@@ -1,10 +1,11 @@
 import axiosStatic, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { MovieDetail, Movies } from "../types/Movie";
+import { Credits, MovieDetail, Movies } from "../types/Movie";
 
+export type movieListingTypes = "upcoming" | "popular" | "top_rated" | "now_playing" | undefined;
 export class MovieResource {
     constructor(private axios: AxiosInstance = axiosStatic, private AxiosRequestConfig: AxiosRequestConfig = {}) {}
 
-    getMovies = (type: string): Promise<Movies> => {
+    getMovies = (type: movieListingTypes): Promise<Movies> => {
         return this.axios
             .get(`movie/${type}`, this.AxiosRequestConfig)
             .then((response) => {
@@ -29,6 +30,17 @@ export class MovieResource {
     getMovie = (id: string): Promise<MovieDetail> => {
         return this.axios
             .get(`movie/${id}`, this.AxiosRequestConfig)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                return error;
+            });
+    };
+
+    getCast = (id: string): Promise<Credits> => {
+        return this.axios
+            .get(`movie/${id}/credits`)
             .then((response) => {
                 return response.data;
             })
