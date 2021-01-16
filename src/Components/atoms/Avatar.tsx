@@ -1,8 +1,9 @@
 import React from "react";
-import MDAvatar, {AvatarProps as MDAvatarProps} from '@material-ui/core/Avatar';
-import MDTooltip from '@material-ui/core/Tooltip'
+import MDAvatar, { AvatarProps as MDAvatarProps } from "@material-ui/core/Avatar";
+import MDTooltip from "@material-ui/core/Tooltip";
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography"
+import Typography from "@material-ui/core/Typography";
+
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
         avatar: {
@@ -10,16 +11,15 @@ const useStyles = makeStyles((theme: Theme) => {
             width: theme.spacing(7),
             height: theme.spacing(7),
         },
-    })
-})
-
+    });
+});
 
 export type AvatarProps = {
-    artistName: string,
-    artistCharacterName: string,
-    artistId: number,
-    artistProfilePath: string,
-} 
+    artistName: string;
+    artistCharacterName: string;
+    artistId: number;
+    artistProfilePath: string;
+};
 
 export const Avatar: React.FC<AvatarProps> = (props) => {
     const classes = useStyles();
