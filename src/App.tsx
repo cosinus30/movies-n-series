@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
 import { Movies } from "./pages/Movies";
 import { Series } from "./pages/Series";
+import { About } from "./pages/About";
 import { MovieDetail } from "./Containers/MovieDetail/MovieDetail";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { QueryClientProvider, QueryClient } from "react-query";
@@ -43,6 +44,7 @@ function App() {
                     <Switch>
                         <Route path="/movies" component={Movies} />
                         <Route exact path="/series" component={Series} />
+                        <Route exact path="/about" component={About} />
                     </Switch>
                     <Route path={"/movies/:id"} component={MovieDetail} />
                 </QueryClientProvider>
