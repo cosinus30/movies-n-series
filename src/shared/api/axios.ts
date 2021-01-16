@@ -5,7 +5,7 @@ const posterPathExtension = "t/p/original/";
 
 const defaultConfig: AxiosRequestConfig = {
     params: {
-        api_key: (process.env.api_key),
+        api_key: 'f13f14b739ac2df73bbb60f84478dcc0',
     },
     baseURL: baseUrl,
 };
