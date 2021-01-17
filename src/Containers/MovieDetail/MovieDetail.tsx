@@ -1,31 +1,27 @@
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    Grid,
-    List,
-    ListItemText,
-    ListItemIcon,
-    Typography,
-    makeStyles,
-    createStyles,
-    Theme,
-    Tabs,
-    Tab,
-} from "@material-ui/core";
+import { makeStyles, createStyles, Theme, IconButton } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Grid from "@material-ui/core/Grid";
+import List from "@material-ui/core/List";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import Typography from "@material-ui/core/Typography";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 import MDListItem from "@material-ui/core/ListItem";
-import MDListItemIcon from "@material-ui/core/ListItemIcon";
 import EventIcon from "@material-ui/icons/Event";
 import GradeIcon from "@material-ui/icons/Grade";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Avatar } from "../../Components/atoms/Avatar";
-import { Chips, ChipsProps } from "../../Components/molecules/Chips";
+import { Chip } from "../../Components/atoms/Chip";
 import { api } from "../../shared/api/api";
 import { Credits, MovieDetail as MovieDetailTypes } from "../../shared/types/Movie";
+import CloseIcon from "@material-ui/icons/Close";
 
 interface ParamTypes {
     id: string;
