@@ -157,7 +157,7 @@ export const MovieDetail: React.FC = React.memo(() => {
                 </Grid>
             </DialogTitle>
             <DialogContent>
-                <DialogContentText>{movieDetails?.overview}</DialogContentText>
+                <DialogContentText color="textPrimary">{movieDetails?.overview}</DialogContentText>
                 <div className={classes.cast}>
                     {credits?.cast?.map((artist) => {
                         return (
@@ -171,17 +171,12 @@ export const MovieDetail: React.FC = React.memo(() => {
                         );
                     })}
                 </div>
-                <Tabs value={value} onChange={handleChange} indicatorColor="primary" textColor="primary" centered>
+                <Tabs value={value} onChange={handleChange} indicatorColor="secondary" centered>
                     <Tab label="Comments" />
                     <Tab label="Similar" />
                     <Tab label="Recommended" />
                 </Tabs>
             </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                    Close
-                </Button>
-            </DialogActions>
         </Dialog>
     );
 });
