@@ -76,7 +76,6 @@ export const MovieDetail: React.FC = React.memo(() => {
     const [open, setOpen] = useState(true);
     const [value, setValue] = useState(1);
     const [movieDetails, setMovieDetails] = useState<MovieDetailTypes | null>(null);
-    const [genres, setGenres] = useState<any>(null);
     const [credits, setCredits] = useState<Credits | null>(null);
     let history = useHistory();
     const classes = useStyles();
@@ -97,18 +96,13 @@ export const MovieDetail: React.FC = React.memo(() => {
             .getMovie(id)
             .then((response) => {
                 setMovieDetails(response);
-                const helelo = response?.genres?.reduce(
-                    (accumulator, currentValue, currentIndex, array) => {
-                        return accumulator.concat({ label: currentValue.name, id: currentValue.id });
-                    },
-                    [{}]
-                );
-                setGenres(helelo);
-                console.log(helelo);
             })
             .catch((error) => {
                 console.error(error);
             });
+        return () => {
+            setMovieDetails(null);
+        };
     }, [id]);
 
     useEffect(() => {
@@ -121,6 +115,9 @@ export const MovieDetail: React.FC = React.memo(() => {
             .catch((error) => {
                 console.error(error);
             });
+        return () => {
+            setCredits(null);
+        };
     }, [id]);
 
     return (
@@ -138,7 +135,11 @@ export const MovieDetail: React.FC = React.memo(() => {
                     <Grid item>
                         <Typography variant="h5">{movieDetails?.title}</Typography>
                         <Typography variant="subtitle1">{movieDetails?.tagline}</Typography>
-                        <Chips chips={genres?.chips} />
+                        <div className={classes.chipArr}>
+                            {movieDetails?.genres.map((genre) => {
+                                return <Chip key={genre.id} id={genre.id} label={genre.name} />;
+                            })}
+                        </div>
                     </Grid>
                     <Grid item>
                         <List>

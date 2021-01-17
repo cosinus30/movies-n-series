@@ -6,6 +6,8 @@ const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
         chip: {
             marginRight: theme.spacing(0.5),
+            padding: 0,
+            height: 24
         },
     });
 });
@@ -17,11 +19,7 @@ export type ChipProps = {
 
 export const Chip: React.FC<ChipProps> = (props) => {
     const classes = useStyles();
-    useEffect(() => {
-        console.log("-----HELLO2-----")
-        console.log(props);
-    }, []);
     return (
-        <MDChip label={props.label} className={classes.chip} />
+        <MDChip color="secondary" label={props.label} className={classes.chip} />
     );
 };
