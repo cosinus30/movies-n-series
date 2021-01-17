@@ -3,6 +3,7 @@ export type Movie = {
     original_title: string,
     title: string,
     popularity: number,
+    overview: string,
     id: number,
 }
 

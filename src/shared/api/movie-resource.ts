@@ -48,4 +48,26 @@ export class MovieResource {
                 return error;
             });
     };
+
+    getRecommendations = (id: string): Promise<Movies> => {
+        return this.axios
+            .get(`movie/${id}/recommendations`)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                return error;
+            });
+    };
+
+    getSimilar = (id: string): Promise<Movies> => {
+        return this.axios
+            .get(`movie/${id}/similar`)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                return error;
+            });
+    };
 }
