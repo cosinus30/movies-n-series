@@ -47,7 +47,7 @@ function App() {
                         <Route exact path="/about" component={About} />
                     </Switch>
                     <Route path={"/movies/:id"} component={MovieDetail} />
-                    <Route path="/" component={() => <Redirect to={"/movies"}/>}/>
+                    <Route exact path="/" component={() => <Redirect to={"/movies"}/>}/>
                 </QueryClientProvider>
             </ThemeProvider>
         </BrowserRouter>
