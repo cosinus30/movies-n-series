@@ -1,10 +1,8 @@
-import { makeStyles, createStyles, Theme, IconButton } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
+import { makeStyles, createStyles, Theme } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -15,13 +13,14 @@ import Tab from "@material-ui/core/Tab";
 import MDListItem from "@material-ui/core/ListItem";
 import EventIcon from "@material-ui/icons/Event";
 import GradeIcon from "@material-ui/icons/Grade";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Avatar } from "../../Components/atoms/Avatar";
 import { Chip } from "../../Components/atoms/Chip";
 import { api } from "../../shared/api/api";
-import { Credits, MovieDetail as MovieDetailTypes } from "../../shared/types/Movie";
 import CloseIcon from "@material-ui/icons/Close";
+import { useQuery } from "react-query";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 interface ParamTypes {
     id: string;
@@ -62,10 +61,10 @@ const useStyles = makeStyles((theme: Theme) => {
             color: theme.palette.common.white,
             background: theme.palette.primary.main,
             opacity: 0.3,
-            '&:hover' : {
+            "&:hover": {
                 background: theme.palette.primary.main,
-                opacity: 1
-            }
+                opacity: 1,
+            },
         },
         icon: {
             minWidth: "32px",
@@ -107,8 +106,6 @@ export const ListItem: React.FC<{ text: string | undefined | number }> = (props)
 export const MovieDetail: React.FC = React.memo(() => {
     const [open, setOpen] = useState(true);
     const [value, setValue] = useState(1);
-    const [movieDetails, setMovieDetails] = useState<MovieDetailTypes | null>(null);
-    const [credits, setCredits] = useState<Credits | null>(null);
     let history = useHistory();
     const classes = useStyles();
 
@@ -123,34 +120,12 @@ export const MovieDetail: React.FC = React.memo(() => {
 
     let { id } = useParams<ParamTypes>();
 
-    useEffect(() => {
-        api.movie
-            .getMovie(id)
-            .then((response) => {
-                setMovieDetails(response);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-        return () => {
-            setMovieDetails(null);
-        };
-    }, [id]);
+    const movieDetailQuery = useQuery("getMovieDetails", () => api.movie.getMovie(id));
+    const castQuery = useQuery("getCast", () => api.movie.getCast(id));
 
-    useEffect(() => {
-        api.movie
-            .getCast(id)
-            .then((response) => {
-                setCredits(response);
-                console.log(response);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-        return () => {
-            setCredits(null);
-        };
-    }, [id]);
+    const movieDetails = movieDetailQuery.data;
+    const movieDetailsFetching = movieDetailQuery.isFetching;
+    const credits = castQuery.data;
 
     return (
         <Dialog
@@ -163,57 +138,64 @@ export const MovieDetail: React.FC = React.memo(() => {
             PaperProps={{ className: classes.root }}
         >
             <DialogContent>
-                <div className={classes.imageContainer}>
-                    <img
-                        src={"https://image.tmdb.org/t/p/original/" + movieDetails?.backdrop_path}
-                        className={classes.image}
-                    />
-                    <IconButton className={classes.imageButton} onClick={handleClose}>
-                        <CloseIcon />
-                    </IconButton>
-                </div>
-                <Grid container direction="row" justify="space-between">
-                    <Grid item>
-                        <Typography variant="h5">{movieDetails?.title}</Typography>
-                        <Typography variant="subtitle1">{movieDetails?.tagline}</Typography>
-                        <div className={classes.chipArr}>
-                            {movieDetails?.genres.map((genre) => {
-                                return <Chip key={genre.id} id={genre.id} label={genre.name} />;
-                            })}
+                {movieDetailsFetching ? (
+                    <Skeleton variant="rect" animation="pulse" width="100%" height="480px" />
+                ) : (
+                    <>
+                        <div className={classes.imageContainer}>
+                            <img
+                                src={"https://image.tmdb.org/t/p/original/" + movieDetails?.backdrop_path}
+                                alt={movieDetails?.original_title}
+                                className={classes.image}
+                            />
+                            <IconButton className={classes.imageButton} onClick={handleClose}>
+                                <CloseIcon />
+                            </IconButton>
                         </div>
-                    </Grid>
-                    <Grid item>
-                        <List>
-                            <ListItem text={movieDetails?.release_date}>
-                                <EventIcon color="secondary" />
-                            </ListItem>
-                            <ListItem text={movieDetails?.vote_average}>
-                                <GradeIcon color="secondary" />
-                            </ListItem>
-                        </List>
-                    </Grid>
-                </Grid>
-                <DialogContentText color="textPrimary">
-                    <Typography variant="body1">{movieDetails?.overview}</Typography>
-                    <div className={classes.cast}>
-                        {credits?.cast?.map((artist) => {
-                            return (
-                                <Avatar
-                                    artistCharacterName={artist.character}
-                                    artistId={artist.id}
-                                    artistName={artist.name}
-                                    artistProfilePath={artist.profile_path}
-                                    key={artist.id}
-                                />
-                            );
-                        })}
-                    </div>
-                    <Tabs value={value} onChange={handleChange} indicatorColor="secondary" centered>
-                        <Tab label="Comments" />
-                        <Tab label="Similar" />
-                        <Tab label="Recommended" />
-                    </Tabs>
-                </DialogContentText>
+                        <Grid container direction="row" justify="space-between">
+                            <Grid item>
+                                <Typography variant="h5">{movieDetails?.title}</Typography>
+                                <Typography variant="subtitle1">{movieDetails?.tagline}</Typography>
+                                <div className={classes.chipArr}>
+                                    {movieDetails?.genres.map((genre) => {
+                                        return <Chip key={genre.id} id={genre.id} label={genre.name} />;
+                                    })}
+                                </div>
+                            </Grid>
+                            <Grid item>
+                                <List>
+                                    <ListItem text={movieDetails?.release_date}>
+                                        <EventIcon color="secondary" />
+                                    </ListItem>
+                                    <ListItem text={movieDetails?.vote_average}>
+                                        <GradeIcon color="secondary" />
+                                    </ListItem>
+                                </List>
+                            </Grid>
+                        </Grid>
+                        <DialogContentText color="textPrimary">
+                            <Typography variant="body1">{movieDetails?.overview}</Typography>
+                            <div className={classes.cast}>
+                                {credits?.cast?.map((artist) => {
+                                    return (
+                                        <Avatar
+                                            artistCharacterName={artist.character}
+                                            artistId={artist.id}
+                                            artistName={artist.name}
+                                            artistProfilePath={artist.profile_path}
+                                            key={artist.id}
+                                        />
+                                    );
+                                })}
+                            </div>
+                            <Tabs value={value} onChange={handleChange} indicatorColor="secondary" centered>
+                                <Tab label="Comments" />
+                                <Tab label="Similar" />
+                                <Tab label="Recommended" />
+                            </Tabs>
+                        </DialogContentText>
+                    </>
+                )}
             </DialogContent>
         </Dialog>
     );
