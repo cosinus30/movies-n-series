@@ -32,6 +32,11 @@ const useStyles = makeStyles((theme: Theme) => {
         root: {
             backgroundColor: theme.palette.primary.main,
             color: theme.palette.secondary.main,
+            width: "100%",
+        },
+        dialog: {
+            height: "100%",
+            overflow: "scroll",
         },
         paddingZero: {
             paddingTop: 0,
@@ -50,12 +55,39 @@ const useStyles = makeStyles((theme: Theme) => {
             padding: theme.spacing(0.5),
             margin: 0,
         },
+        imageButton: {
+            position: "absolute",
+            right: "-2%",
+            top: "-2%",
+            color: theme.palette.common.white,
+            background: theme.palette.primary.main,
+            opacity: 0.3,
+            '&:hover' : {
+                background: theme.palette.primary.main,
+                opacity: 1
+            }
+        },
         icon: {
             minWidth: "32px",
         },
         image: {
             objectFit: "cover",
             maxHeight: 360,
+            width: "calc(100% + 48px)",
+            marginTop: -28,
+            marginLeft: -24,
+            marginRight: -24,
+        },
+        imageContainer: {
+            position: "relative",
+            width: "100%",
+            height: "360px",
+        },
+        chipArr: {
+            display: "flex",
+            flexWrap: "wrap",
+            listStyle: "none",
+            margin: 0,
         },
     });
 });
@@ -127,10 +159,19 @@ export const MovieDetail: React.FC = React.memo(() => {
             fullWidth
             onClose={handleClose}
             scroll="paper"
+            className={classes.dialog}
             PaperProps={{ className: classes.root }}
         >
-            <img src={"https://image.tmdb.org/t/p/original/" + movieDetails?.backdrop_path} className={classes.image} />
-            <DialogTitle id="max-width-dialog-title">
+            <DialogContent>
+                <div className={classes.imageContainer}>
+                    <img
+                        src={"https://image.tmdb.org/t/p/original/" + movieDetails?.backdrop_path}
+                        className={classes.image}
+                    />
+                    <IconButton className={classes.imageButton} onClick={handleClose}>
+                        <CloseIcon />
+                    </IconButton>
+                </div>
                 <Grid container direction="row" justify="space-between">
                     <Grid item>
                         <Typography variant="h5">{movieDetails?.title}</Typography>
@@ -152,27 +193,27 @@ export const MovieDetail: React.FC = React.memo(() => {
                         </List>
                     </Grid>
                 </Grid>
-            </DialogTitle>
-            <DialogContent>
-                <DialogContentText color="textPrimary">{movieDetails?.overview}</DialogContentText>
-                <div className={classes.cast}>
-                    {credits?.cast?.map((artist) => {
-                        return (
-                            <Avatar
-                                artistCharacterName={artist.character}
-                                artistId={artist.id}
-                                artistName={artist.name}
-                                artistProfilePath={artist.profile_path}
-                                key={artist.id}
-                            />
-                        );
-                    })}
-                </div>
-                <Tabs value={value} onChange={handleChange} indicatorColor="secondary" centered>
-                    <Tab label="Comments" />
-                    <Tab label="Similar" />
-                    <Tab label="Recommended" />
-                </Tabs>
+                <DialogContentText color="textPrimary">
+                    <Typography variant="body1">{movieDetails?.overview}</Typography>
+                    <div className={classes.cast}>
+                        {credits?.cast?.map((artist) => {
+                            return (
+                                <Avatar
+                                    artistCharacterName={artist.character}
+                                    artistId={artist.id}
+                                    artistName={artist.name}
+                                    artistProfilePath={artist.profile_path}
+                                    key={artist.id}
+                                />
+                            );
+                        })}
+                    </div>
+                    <Tabs value={value} onChange={handleChange} indicatorColor="secondary" centered>
+                        <Tab label="Comments" />
+                        <Tab label="Similar" />
+                        <Tab label="Recommended" />
+                    </Tabs>
+                </DialogContentText>
             </DialogContent>
         </Dialog>
     );
