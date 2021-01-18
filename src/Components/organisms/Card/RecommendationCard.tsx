@@ -1,8 +1,15 @@
-import { CardMedia, createStyles, makeStyles, Theme, Typography, CardContent, Grid } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import React from "react";
 import Card from "@material-ui/core/Card";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import Skeleton from "@material-ui/lab/Skeleton";
+import ChevronRightSharp from "@material-ui/icons/ChevronRightSharp";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -15,18 +22,17 @@ const useStyles = makeStyles((theme: Theme) =>
         card: {
             backgroundColor: theme.palette.primary.dark,
             color: theme.palette.secondary.main,
-            height: 360,
-            overflow: "hidden",
             transition: "all 465ms",
             marginBottom: theme.spacing(2),
             "&:hover": {
-                transform: "scale(1.2)",
-                overflow: "scroll",
+                transform: "scale(1.03)",
             },
         },
         content: {
+            height: 180,
             lineHeight: "1.2",
-            textDecoration: "none"
+            textDecoration: "none",
+            overflow: "hidden",
         },
     })
 );
@@ -49,20 +55,25 @@ export const RecommendationCard: React.FC<CardProps> = (props) => {
             {props.isLoading ? (
                 <Skeleton animation="pulse" variant="rect" height={320} />
             ) : (
-                <Link to={`/movies/${id}`}>
-                    <Card className={classes.card}>
+                <Card className={classes.card}>
+                    <Link to={`/movies/${id}`}>
                         <CardMedia
                             component="img"
                             alt={originalTitle}
                             image={`https://image.tmdb.org/t/p/original/${posterPath}`}
                             className={classes.media}
                         />
-                        <CardContent className={classes.content}>
-                            <Typography variant={"subtitle1"}>{title}</Typography>
-                            <Typography variant={"caption"}>{overview}</Typography>
-                        </CardContent>
-                    </Card>
-                </Link>
+                    </Link>
+                    <CardContent className={classes.content}>
+                        <Typography variant={"subtitle1"}>{title}</Typography>
+                        <Typography variant={"caption"}>{overview}</Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button variant="text" size="small" endIcon={<ChevronRightSharp />}>
+                            <Link to={`/movies/${id}`}>See More</Link>
+                        </Button>
+                    </CardActions>
+                </Card>
             )}
         </Grid>
     );
