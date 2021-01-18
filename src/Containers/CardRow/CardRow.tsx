@@ -8,7 +8,7 @@ import React, { useRef } from "react";
 import { Card } from "../../Components/organisms/Card/Card";
 import { api } from "../../shared/api/api";
 import { movieListingTypes } from "../../shared/api/movie-resource";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 
 export type CardRowProps = {
     title: string;
@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const CardRow: React.FC<CardRowProps> = (props) => {
     const classes = useStyles();
-    const queryClient = useQueryClient();
     const divRef = useRef<HTMLDivElement>(null);
 
     const movieQuery = useQuery(
@@ -51,7 +50,7 @@ export const CardRow: React.FC<CardRowProps> = (props) => {
         props.url ? () => api.movie.getMovies(props.url) : api.movie.getTrending
     );
 
-    const { data, error, isLoading } = movieQuery;
+    const { data, error, isFetching } = movieQuery;
 
     const handleScroll = (direction: string) => {
         if (divRef && divRef.current) {
@@ -80,7 +79,7 @@ export const CardRow: React.FC<CardRowProps> = (props) => {
                                 title={movie.title}
                                 posterPath={movie.poster_path}
                                 id={movie.id}
-                                isLoading={isLoading}
+                                isLoading={isFetching}
                             />
                         );
                     })}
