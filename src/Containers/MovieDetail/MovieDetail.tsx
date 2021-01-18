@@ -7,8 +7,6 @@ import List from "@material-ui/core/List";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Typography from "@material-ui/core/Typography";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
 import MDListItem from "@material-ui/core/ListItem";
 import EventIcon from "@material-ui/icons/Event";
 import GradeIcon from "@material-ui/icons/Grade";
@@ -21,10 +19,7 @@ import { useQuery } from "react-query";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { ImageWithButton } from "../../Components/atoms/ImageWithButton";
 import CloseIcon from "@material-ui/icons/Close";
-
-interface ParamTypes {
-    id: string;
-}
+import { Tabs } from "../../Components/organisms/Tab/Tabs";
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
@@ -81,13 +76,8 @@ export const ListItem: React.FC<{ text: string | undefined | number }> = (props)
 
 export const MovieDetail: React.FC = React.memo(() => {
     const [open, setOpen] = useState(true);
-    const [value, setValue] = useState(1);
     let history = useHistory();
     const classes = useStyles();
-
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        setValue(newValue);
-    };
 
     const handleClose = () => {
         setOpen(false);
@@ -161,11 +151,7 @@ export const MovieDetail: React.FC = React.memo(() => {
                                     );
                                 })}
                             </div>
-                            <Tabs value={value} onChange={handleChange} indicatorColor="secondary" centered>
-                                <Tab label="Comments" />
-                                <Tab label="Similar" />
-                                <Tab label="Recommended" />
-                            </Tabs>
+                            <Tabs />
                         </DialogContentText>
                     </>
                 )}
