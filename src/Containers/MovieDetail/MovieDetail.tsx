@@ -2,7 +2,6 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -18,9 +17,10 @@ import { useHistory, useParams } from "react-router-dom";
 import { Avatar } from "../../Components/atoms/Avatar";
 import { Chip } from "../../Components/atoms/Chip";
 import { api } from "../../shared/api/api";
-import CloseIcon from "@material-ui/icons/Close";
 import { useQuery } from "react-query";
 import Skeleton from "@material-ui/lab/Skeleton";
+import { ImageWithButton } from "../../Components/atoms/ImageWithButton";
+import CloseIcon from "@material-ui/icons/Close";
 
 interface ParamTypes {
     id: string;
@@ -54,33 +54,9 @@ const useStyles = makeStyles((theme: Theme) => {
             padding: theme.spacing(0.5),
             margin: 0,
         },
-        imageButton: {
-            position: "absolute",
-            right: "-2%",
-            top: "-2%",
-            color: theme.palette.common.white,
-            background: theme.palette.primary.main,
-            opacity: 0.3,
-            "&:hover": {
-                background: theme.palette.primary.main,
-                opacity: 1,
-            },
-        },
+
         icon: {
             minWidth: "32px",
-        },
-        image: {
-            objectFit: "cover",
-            maxHeight: 360,
-            width: "calc(100% + 48px)",
-            marginTop: -28,
-            marginLeft: -24,
-            marginRight: -24,
-        },
-        imageContainer: {
-            position: "relative",
-            width: "100%",
-            height: "360px",
         },
         chipArr: {
             display: "flex",
@@ -142,16 +118,13 @@ export const MovieDetail: React.FC = React.memo(() => {
                     <Skeleton variant="rect" animation="pulse" width="100%" height="480px" />
                 ) : (
                     <>
-                        <div className={classes.imageContainer}>
-                            <img
-                                src={"https://image.tmdb.org/t/p/original/" + movieDetails?.backdrop_path}
-                                alt={movieDetails?.original_title}
-                                className={classes.image}
-                            />
-                            <IconButton className={classes.imageButton} onClick={handleClose}>
-                                <CloseIcon />
-                            </IconButton>
-                        </div>
+                        <ImageWithButton
+                            backdrop_path={movieDetails?.backdrop_path}
+                            onClose={handleClose}
+                            original_title={movieDetails?.original_title}
+                        >
+                            <CloseIcon />
+                        </ImageWithButton>
                         <Grid container direction="row" justify="space-between">
                             <Grid item>
                                 <Typography variant="h5">{movieDetails?.title}</Typography>
