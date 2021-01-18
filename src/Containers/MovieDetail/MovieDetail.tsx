@@ -90,7 +90,7 @@ export const MovieDetail: React.FC = React.memo(() => {
     const { data: movieDetails, isFetching: movieDetailsFetching } = useQuery(["getMovieDetails", id], () =>
         api.movie.getMovie(id)
     );
-    const { data: credits } = useQuery("getCast", () => api.movie.getCast(id));
+    const { data: credits } = useQuery(["getCast", id], () => api.movie.getCast(id));
 
     return (
         <Dialog
