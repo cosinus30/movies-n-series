@@ -21,6 +21,7 @@ const theme = createMuiTheme({
     palette: {
         primary: {
             main: "#141414",
+            dark: "#1F1F1F"
         },
         secondary: {
             main: "#D7D9D6",
@@ -31,7 +32,13 @@ const theme = createMuiTheme({
     },
 });
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
 
 function App() {
     return (
