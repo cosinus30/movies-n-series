@@ -20,6 +20,7 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import { ImageWithButton } from "../../Components/atoms/ImageWithButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { Tabs } from "../../Components/organisms/Tab/Tabs";
+import { ParamTypesId } from "../../shared/types/Params";
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
@@ -84,7 +85,7 @@ export const MovieDetail: React.FC = React.memo(() => {
         history.push("/movies");
     };
 
-    let { id } = useParams<ParamTypes>();
+    let { id } = useParams<ParamTypesId>();
 
     const movieDetailQuery = useQuery("getMovieDetails", () => api.movie.getMovie(id));
     const castQuery = useQuery("getCast", () => api.movie.getCast(id));
