@@ -2,6 +2,7 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
+import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -136,21 +137,23 @@ export const MovieDetail: React.FC = React.memo(() => {
                             </Grid>
                         </Grid>
                         <DialogContentText color="textPrimary">
-                            <Typography variant="body1">{movieDetails?.overview}</Typography>
-                            <div className={classes.cast}>
-                                {credits?.cast?.map((artist) => {
-                                    return (
-                                        <Avatar
-                                            artistCharacterName={artist.character}
-                                            artistId={artist.id}
-                                            artistName={artist.name}
-                                            artistProfilePath={artist.profile_path}
-                                            key={artist.id}
-                                        />
-                                    );
-                                })}
-                            </div>
-                            <Tabs />
+                            <Box marginY={1} paddingY={2}>
+                                <Typography variant="body1">{movieDetails?.overview}</Typography>
+                                <div className={classes.cast}>
+                                    {credits?.cast?.map((artist) => {
+                                        return (
+                                            <Avatar
+                                                artistCharacterName={artist.character}
+                                                artistId={artist.id}
+                                                artistName={artist.name}
+                                                artistProfilePath={artist.profile_path}
+                                                key={artist.id}
+                                            />
+                                        );
+                                    })}
+                                </div>
+                                <Tabs />
+                            </Box>
                         </DialogContentText>
                     </>
                 )}
