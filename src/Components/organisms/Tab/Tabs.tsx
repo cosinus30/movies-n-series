@@ -1,41 +1,13 @@
 import React, { useState } from "react";
 import MDTabs from "@material-ui/core/Tabs";
 import MDTab from "@material-ui/core/Tab";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import { Movies } from "../../../shared/types/Movie";
 import { useParams } from "react-router-dom";
 import { ParamTypesId } from "../../../shared/types/Params";
 import { api } from "../../../shared/api/api";
 import { useQuery } from "react-query";
-import { Card, CardContent, CardMedia, createStyles, Grid, makeStyles, Theme } from "@material-ui/core";
-import { RecommendationCard } from "../Card/RecommendationCard";
-
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: any;
-    value: any;
-}
-
-export const TabPanel: React.FC<TabPanelProps> = (props) => {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`scrollable-force-tabpanel-${index}`}
-            aria-labelledby={`scrollable-force-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-};
+import Grid from "@material-ui/core/Grid";
+import { RecommendationCard } from "../../molecules/Card/RecommendationCard";
+import { TabPanel } from "../../molecules/TabPanel/TabPanel";
 
 export const Tabs: React.FC = (props) => {
     const [value, setValue] = useState(1);
@@ -56,14 +28,10 @@ export const Tabs: React.FC = (props) => {
     return (
         <div>
             <MDTabs value={value} onChange={handleChange} indicatorColor="secondary" centered>
-                <MDTab label="Comments" />
                 <MDTab label="Similar" />
                 <MDTab label="Recommended" />
             </MDTabs>
             <TabPanel value={value} index={0}>
-                Comments
-            </TabPanel>
-            <TabPanel value={value} index={1}>
                 <Grid container spacing={1}>
                     {similarMovies?.results.map((el) => {
                         return (
@@ -80,7 +48,7 @@ export const Tabs: React.FC = (props) => {
                     })}
                 </Grid>
             </TabPanel>
-            <TabPanel value={value} index={2}>
+            <TabPanel value={value} index={1}>
                 <Grid container spacing={1}>
                     {recommendedMovies?.results.map((el) => {
                         return (
