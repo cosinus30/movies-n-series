@@ -8,6 +8,7 @@ import { About } from "./pages/About";
 import { MovieDetail } from "./Containers/MovieDetail/MovieDetail";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { QueryClientProvider, QueryClient } from "react-query";
+import { TVDetail } from "./Containers/TVDetail/TVDetail";
 const theme = createMuiTheme({
     breakpoints: {
         values: {
@@ -54,6 +55,7 @@ function App() {
                         <Route exact path="/about" component={About} />
                     </Switch>
                     <Route path={"/movies/:id"} component={MovieDetail} />
+                    <Route path={"/series/:id"} component={TVDetail} />
                     <Route exact path="/" component={() => <Redirect to={"/movies"}/>}/>
                 </QueryClientProvider>
             </ThemeProvider>
