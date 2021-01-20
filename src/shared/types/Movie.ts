@@ -1,4 +1,4 @@
-export type Movie = {
+export interface Movie {
     poster_path: string,
     original_title: string,
     title: string,
@@ -7,19 +7,19 @@ export type Movie = {
     id: number,
 }
 
-export type Movies = {
+export interface Movies {
     results: Movie[],
     page: number,
     total_results: number,
     total_pages: number
 }
 
-export type Genre = {
+export interface Genre {
     id: number,
     name: string
 }
 
-export type MovieDetail = {
+export interface MovieDetail {
     title: string,
     original_title: string,
     release_date: string,
@@ -31,14 +31,14 @@ export type MovieDetail = {
     backdrop_path: string,
 }
 
-export type Person = {
+export interface Person {
     name: string,
     profile_path: string,
     character: string,
     id: number,
 }
 
-export type Credits = {
+export interface Credits {
     cast: Person[],
     crew: Person[],
 }
