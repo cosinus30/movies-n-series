@@ -5,15 +5,19 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { ChevronLeftSharp, ChevronRightSharp } from "@material-ui/icons";
 import React, { useRef } from "react";
-import { Card } from "../../Components/organisms/Card/Card";
+import { Card } from "../../Components/molecules/Card/Card";
 import { api } from "../../shared/api/api";
 import { movieListingTypes } from "../../shared/api/movie-resource";
 import { useQuery } from "react-query";
+import { tvListingTypes } from "../../shared/api/tv-resource";
+import { TVListResult } from "../../shared/types/Tv";
+import { Movies } from "../../shared/types/Movie";
 
-export type CardRowProps = {
+export interface CardRowProps {
     title: string;
-    url?: movieListingTypes;
-};
+    url: movieListingTypes | tvListingTypes;
+    api: () => Promise<Movies | TVListResult>;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -45,12 +49,12 @@ export const CardRow: React.FC<CardRowProps> = (props) => {
     const classes = useStyles();
     const divRef = useRef<HTMLDivElement>(null);
 
-    const movieQuery = useQuery(
-        props.url ? props.url : "trending",
-        props.url ? () => api.movie.getMovies(props.url) : api.movie.getTrending
+    const query = useQuery(
+        props.title,
+        () => props.api()
     );
 
-    const { data, error, isFetching } = movieQuery;
+    const { data, error, isFetching } = query;
 
     const handleScroll = (direction: string) => {
         if (divRef && divRef.current) {
@@ -72,17 +76,17 @@ export const CardRow: React.FC<CardRowProps> = (props) => {
                     <ChevronLeftSharp fontSize="large" color="secondary" />
                 </IconButton>
                 <Grid container className={classes.gridList} spacing={4} ref={divRef}>
-                    {data?.results.map((movie) => {
+                    {data?.results && data?.results.length > 0 ? data?.results.map((item) => {
                         return (
                             <Card
-                                key={movie.id}
-                                title={movie.title}
-                                posterPath={movie.poster_path}
-                                id={movie.id}
+                                key={item.id}
+                                title={item.title}
+                                posterPath={item.poster_path}
+                                id={item.id}
                                 isLoading={isFetching}
                             />
                         );
-                    })}
+                    }) : null}
                 </Grid>
                 <IconButton onClick={() => handleScroll("right")}>
                     <ChevronRightSharp fontSize="large" color="secondary" />
