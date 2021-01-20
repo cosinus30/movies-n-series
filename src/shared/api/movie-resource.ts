@@ -1,7 +1,7 @@
 import axiosStatic, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { Credits, MovieDetail, Movies } from "../types/Movie";
 
-export type movieListingTypes = "upcoming" | "popular" | "top_rated" | "now_playing" | undefined;
+export type movieListingTypes = "upcoming" | "popular" | "top_rated" | "now_playing" | "trending";
 export class MovieResource {
     constructor(private axios: AxiosInstance = axiosStatic, private AxiosRequestConfig: AxiosRequestConfig = {}) {}
 
