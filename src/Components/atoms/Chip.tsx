@@ -5,9 +5,13 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core";
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
         chip: {
-            marginRight: theme.spacing(0.5),
+            backgroundColor: theme.palette.primary.dark,
+            color: theme.palette.secondary.main,
+            marginRight: theme.spacing(1),
+            marginTop: theme.spacing(1),
             padding: 0,
-            height: 24
+            height: 24,
+
         },
     });
 });
@@ -20,6 +24,6 @@ export type ChipProps = {
 export const Chip: React.FC<ChipProps> = (props) => {
     const classes = useStyles();
     return (
-        <MDChip color="secondary" label={props.label} className={classes.chip} />
+        <MDChip label={props.label} className={classes.chip} />
     );
 };
