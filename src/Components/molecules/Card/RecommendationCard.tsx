@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
             objectPosition: "0 0",
         },
         card: {
-            backgroundColor: theme.palette.primary.dark,
+            backgroundColor: theme.palette.primary.light,
             color: theme.palette.secondary.main,
             transition: "all 465ms",
             marginBottom: theme.spacing(2),
