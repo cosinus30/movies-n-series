@@ -22,6 +22,7 @@ import { ImageWithButton } from "../../Components/atoms/ImageWithButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { Tabs } from "../../Components/organisms/Tab/Tabs";
 import { ParamTypesId } from "../../shared/types/Params";
+import { ListItem } from "../../Components/atoms/ListItem";
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
@@ -34,14 +35,6 @@ const useStyles = makeStyles((theme: Theme) => {
             height: "100%",
             overflow: "scroll",
         },
-        paddingZero: {
-            paddingTop: 0,
-            paddingBottom: 0,
-        },
-        marginZero: {
-            marginTop: 0,
-            marginBottom: 0,
-        },
         cast: {
             display: "flex",
             flexWrap: "nowrap",
@@ -51,7 +44,6 @@ const useStyles = makeStyles((theme: Theme) => {
             padding: theme.spacing(0.5),
             margin: 0,
         },
-
         icon: {
             minWidth: "32px",
         },
@@ -63,18 +55,6 @@ const useStyles = makeStyles((theme: Theme) => {
         },
     });
 });
-
-export const ListItem: React.FC<{ text: string | undefined | number }> = (props) => {
-    const classes = useStyles();
-    return (
-        <MDListItem className={classes.paddingZero}>
-            <ListItemIcon className={classes.icon}>{props.children}</ListItemIcon>
-            <ListItemText className={classes.marginZero}>
-                <Typography variant="caption">{props.text}</Typography>
-            </ListItemText>
-        </MDListItem>
-    );
-};
 
 export const MovieDetail: React.FC = React.memo(() => {
     const [open, setOpen] = useState(true);
