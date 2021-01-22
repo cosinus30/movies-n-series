@@ -22,7 +22,8 @@ const theme = createMuiTheme({
     palette: {
         primary: {
             main: "#141414",
-            dark: "#1F1F1F"
+            dark: "#3D3D3D",
+            light: "#1F1F1F"
         },
         secondary: {
             main: "#D7D9D6",
@@ -51,7 +52,7 @@ function App() {
                     </div>
                     <Switch>
                         <Route path="/movies" component={Movies} />
-                        <Route exact path="/series" component={Series} />
+                        <Route path="/series" component={Series} />
                         <Route exact path="/about" component={About} />
                     </Switch>
                     <Route path={"/movies/:id"} component={MovieDetail} />
