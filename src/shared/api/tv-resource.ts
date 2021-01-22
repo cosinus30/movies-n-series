@@ -1,6 +1,5 @@
 import axiosStatic, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { Credits, MovieDetail, Movies } from "../types/Movie";
-import { TVDetail, TvListItem, TVListResult } from "../types/Tv";
+import { TVDetail, TVListResult, SeasonDetail } from "../types/Tv";
 
 export type tvListingTypes = "popular" | "top_rated" | "now_playing" | "trending" | "on_the_air";
 export class TVResource {
@@ -31,6 +30,13 @@ export class TVResource {
     getTvShow = (id: string): Promise<TVDetail> => {
         return this.axios
             .get(`tv/${id}`, this.AxiosRequestConfig)
+            .then((response) => response.data)
+            .catch((err) => err);
+    };
+
+    getTvShowSeason = (id: string, seasonNumber: number): Promise<SeasonDetail> => {
+        return this.axios
+            .get(`tv/${id}/season/${seasonNumber+1}`, this.AxiosRequestConfig)
             .then((response) => response.data)
             .catch((err) => err);
     };
