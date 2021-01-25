@@ -36,8 +36,23 @@ export class TVResource {
 
     getTvShowSeason = (id: string, seasonNumber: number): Promise<SeasonDetail> => {
         return this.axios
-            .get(`tv/${id}/season/${seasonNumber+1}`, this.AxiosRequestConfig)
+            .get(`tv/${id}/season/${seasonNumber + 1}`, this.AxiosRequestConfig)
             .then((response) => response.data)
             .catch((err) => err);
     };
+
+    getTvRecommendations = (id: string): Promise<TVListResult> => {
+        return this.axios
+            .get(`tv/${id}/recommendations`, this.AxiosRequestConfig)
+            .then((response) => response.data)
+            .catch((err) => err);
+    };
+
+    getTvSimilar = (id: string): Promise<TVListResult> => {
+        return this.axios
+            .get(`tv/${id}/similar`, this.AxiosRequestConfig)
+            .then((response) => response.data)
+            .catch((err) => err);
+    };
+
 }
