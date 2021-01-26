@@ -1,7 +1,6 @@
 import { makeStyles, createStyles, Theme } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
@@ -116,7 +115,7 @@ export const MovieDetail: React.FC = React.memo(() => {
                                 </List>
                             </Grid>
                         </Grid>
-                        <DialogContentText color="textPrimary">
+                        <div color="textPrimary">
                             <Box marginY={1} paddingY={2}>
                                 <Typography variant="body1">{movieDetails?.overview}</Typography>
                                 <div className={classes.cast}>
@@ -134,7 +133,7 @@ export const MovieDetail: React.FC = React.memo(() => {
                                 </div>
                                 <Tabs page="movies" recommendedItems={recommendedMovies} similarItems={similarMovies} />
                             </Box>
-                        </DialogContentText>
+                        </div>
                     </>
                 )}
             </DialogContent>

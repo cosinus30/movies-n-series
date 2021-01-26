@@ -4,14 +4,13 @@ import { useHistory, useParams } from "react-router-dom";
 import { api } from "../../shared/api/api";
 import { ParamTypesId } from "../../shared/types/Params";
 import Dialog from "@material-ui/core/Dialog";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogContent from "@material-ui/core/DialogContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Skeleton from "@material-ui/lab/Skeleton";
 import Box from "@material-ui/core/Box";
 import List from "@material-ui/core/List";
-import { createStyles, makeStyles, Paper, Theme } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import { ImageWithButton } from "../../Components/atoms/ImageWithButton";
 import CloseIcon from "@material-ui/icons/CloseSharp";
 import GradeIcon from "@material-ui/icons/GradeSharp";
@@ -59,7 +58,6 @@ export const TVDetail: React.FC = () => {
     let history = useHistory();
     const classes = useStyles();
     const [seasonNumber, setSeasonNumber] = useState<number>(0);
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleClose = () => {
         setOpen(false);
@@ -72,17 +70,12 @@ export const TVDetail: React.FC = () => {
         api.tv.getTvShow(id)
     );
 
-    const { data: tvShowSeasonDetails, isFetching: istvShowSeasonDetailsFetching } = useQuery(
-        ["getTvShowSeason", id, seasonNumber],
-        () => api.tv.getTvShowSeason(id, seasonNumber)
+    const { data: tvShowSeasonDetails } = useQuery(["getTvShowSeason", id, seasonNumber], () =>
+        api.tv.getTvShowSeason(id, seasonNumber)
     );
 
-    const { data: similarTvShows, isFetching: isSimilarTvShowsFetching } = useQuery(["getSimilar", id], () =>
-        api.tv.getTvSimilar(id)
-    );
-    const { data: recommendedTvShows, isFetching: isRecommendedTvShowsFetching } = useQuery(["getRecommended", id], () =>
-        api.tv.getTvRecommendations(id)
-    );
+    const { data: similarTvShows } = useQuery(["getSimilar", id], () => api.tv.getTvSimilar(id));
+    const { data: recommendedTvShows } = useQuery(["getRecommended", id], () => api.tv.getTvRecommendations(id));
 
     return (
         <Dialog
@@ -145,7 +138,7 @@ export const TVDetail: React.FC = () => {
                                 setSeasonNumber={setSeasonNumber}
                             />
                         </div>
-                        <Tabs page="series" recommendedItems={recommendedTvShows} similarItems={similarTvShows}/>
+                        <Tabs page="series" recommendedItems={recommendedTvShows} similarItems={similarTvShows} />
                     </>
                 )}
             </DialogContent>
