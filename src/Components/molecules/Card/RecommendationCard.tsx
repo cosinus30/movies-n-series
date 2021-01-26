@@ -43,38 +43,34 @@ export interface CardProps {
     id: number;
     overview: string;
     originalTitle: string;
-    isLoading: boolean;
+    type: string;
 }
 
 export const RecommendationCard: React.FC<CardProps> = (props) => {
-    const { title, posterPath, id, overview, isLoading, originalTitle } = props;
+    const { title, posterPath, id, overview, originalTitle, type } = props;
     const classes = useStyles();
 
     return (
         <Grid item xs={6} md={4}>
-            {props.isLoading ? (
-                <Skeleton animation="pulse" variant="rect" height={320} />
-            ) : (
-                <Card className={classes.card}>
-                    <Link to={`/movies/${id}`}>
-                        <CardMedia
-                            component="img"
-                            alt={originalTitle}
-                            image={`https://image.tmdb.org/t/p/original/${posterPath}`}
-                            className={classes.media}
-                        />
-                    </Link>
-                    <CardContent className={classes.content}>
-                        <Typography variant={"subtitle1"}>{title}</Typography>
-                        <Typography variant={"caption"}>{overview}</Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button variant="text" size="small" endIcon={<ChevronRightSharp />}>
-                            <Link to={`/movies/${id}`}>See More</Link>
-                        </Button>
-                    </CardActions>
-                </Card>
-            )}
+            <Card className={classes.card}>
+                <Link to={`/${type}/${id}`}>
+                    <CardMedia
+                        component="img"
+                        alt={originalTitle}
+                        image={`https://image.tmdb.org/t/p/original/${posterPath}`}
+                        className={classes.media}
+                    />
+                </Link>
+                <CardContent className={classes.content}>
+                    <Typography variant={"subtitle1"}>{title}</Typography>
+                    <Typography variant={"caption"}>{overview}</Typography>
+                </CardContent>
+                <CardActions>
+                    <Button variant="text" size="small" endIcon={<ChevronRightSharp />}>
+                        <Link to={`/${type}/${id}`}>See More</Link>
+                    </Button>
+                </CardActions>
+            </Card>
         </Grid>
     );
 };
