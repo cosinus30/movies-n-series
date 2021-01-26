@@ -106,7 +106,7 @@ export const Episodes: React.FC<EpisodesProps> = ({ tvDetails, seasonDetails, se
                             <Paper  elevation={5} className={classes.episodePaper}>
                                 <Grid container alignContent="center" direction="row" wrap="nowrap" spacing={2}>
                                     {episode.still_path && (
-                                        <Grid item spacing={0}>
+                                        <Grid item>
                                             <img
                                                 src={`https://image.tmdb.org/t/p/original/${episode.still_path}`}
                                                 height="100%"
