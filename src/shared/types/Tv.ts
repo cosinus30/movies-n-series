@@ -1,19 +1,10 @@
-import { Genre } from "./Movie";
-
-export interface TvListItem {
-    title: string;
-    poster_path: string;
-    id: number;
-    original_title: string;
-    popularity: number;
-    overview: string;
-}
+import { Genre, SummarizedItem } from "./Common";
 
 export interface TVListResult {
     page: number;
     total_results: number;
     total_pages: number;
-    results: TvListItem[];
+    results: SummarizedItem[];
 }
 
 export interface Season {
