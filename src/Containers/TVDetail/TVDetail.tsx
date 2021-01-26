@@ -20,6 +20,7 @@ import TheaterIcon from "@material-ui/icons/TheatersSharp";
 import { Chip } from "../../Components/atoms/Chip";
 import { ListItem } from "../../Components/atoms/ListItem";
 import { Episodes } from "../../Components/organisms/Episodes/Episodes";
+import { Tabs } from "../../Components/organisms/Tab/Tabs";
 
 const useStyles = makeStyles((theme: Theme) => {
     return createStyles({
@@ -76,6 +77,13 @@ export const TVDetail: React.FC = () => {
         () => api.tv.getTvShowSeason(id, seasonNumber)
     );
 
+    const { data: similarTvShows, isFetching: isSimilarTvShowsFetching } = useQuery(["getSimilar", id], () =>
+        api.tv.getTvSimilar(id)
+    );
+    const { data: recommendedTvShows, isFetching: isRecommendedTvShowsFetching } = useQuery(["getRecommended", id], () =>
+        api.tv.getTvRecommendations(id)
+    );
+
     return (
         <Dialog
             open={open}
@@ -125,13 +133,19 @@ export const TVDetail: React.FC = () => {
                                 </List>
                             </Grid>
                         </Grid>
-                        <DialogContentText color="textPrimary">
+                        <div color="textPrimary">
                             <Box marginY={1} paddingY={2}>
                                 <Typography variant="body1">{tvShowDetails?.overview}</Typography>
                                 {/* <Tabs /> */}
                             </Box>
-                            <Episodes seasonDetails={tvShowSeasonDetails} tvDetails={tvShowDetails} seasonNumber={seasonNumber} setSeasonNumber={setSeasonNumber} />
-                        </DialogContentText>
+                            <Episodes
+                                seasonDetails={tvShowSeasonDetails}
+                                tvDetails={tvShowDetails}
+                                seasonNumber={seasonNumber}
+                                setSeasonNumber={setSeasonNumber}
+                            />
+                        </div>
+                        <Tabs page="series" recommendedItems={recommendedTvShows} similarItems={similarTvShows}/>
                     </>
                 )}
             </DialogContent>

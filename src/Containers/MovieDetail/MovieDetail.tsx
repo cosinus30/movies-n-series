@@ -5,10 +5,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Typography from "@material-ui/core/Typography";
-import MDListItem from "@material-ui/core/ListItem";
 import EventIcon from "@material-ui/icons/Event";
 import GradeIcon from "@material-ui/icons/Grade";
 import React, { useState } from "react";
@@ -73,6 +70,9 @@ export const MovieDetail: React.FC = React.memo(() => {
     );
     const { data: credits } = useQuery(["getCast", id], () => api.movie.getCast(id));
 
+    const { data: similarMovies } = useQuery(["getSimilar", id], () => api.movie.getSimilar(id));
+    const { data: recommendedMovies } = useQuery(["getRecommended", id], () => api.movie.getRecommendations(id));
+
     return (
         <Dialog
             open={open}
@@ -95,7 +95,7 @@ export const MovieDetail: React.FC = React.memo(() => {
                         >
                             <CloseIcon />
                         </ImageWithButton>
-                        <Grid container direction="row" justify="space-between">
+                        <Grid container direction="row" wrap="nowrap" justify="space-between">
                             <Grid item>
                                 <Typography variant="h5">{movieDetails?.title}</Typography>
                                 <Typography variant="subtitle1">{movieDetails?.tagline}</Typography>
@@ -132,7 +132,7 @@ export const MovieDetail: React.FC = React.memo(() => {
                                         );
                                     })}
                                 </div>
-                                <Tabs />
+                                <Tabs page="movies" recommendedItems={recommendedMovies} similarItems={similarMovies} />
                             </Box>
                         </DialogContentText>
                     </>
